@@ -1,0 +1,242 @@
+import time
+import sys
+from opcua import Client
+from datetime import datetime
+
+url = "opc.tcp://desktop-080ph8v:62640/IntegrationObjects/ServerSimulator"
+
+try:
+    Client = Client(url)
+    Client.connect()
+    print("Connected with OPC UA server")
+
+except Exception as err:
+    print(err)
+    sys.exit(1)
+
+class sub_handler(object):
+    def datachange_notification(self, node, val, data):
+        if node == node_tag11:
+            print("Value of Tag 11 is:", val)
+        elif node == node_tag12:
+            print("Value of Tag 12 is:", val)
+
+if __name__ == '__main__':
+    node_tag11 = Client.get_node("ns=2;s=Tag11")
+    node_tag12 = Client.get_node("ns=2;s=Tag12")
+
+    #subscription handler
+    handler = sub_handler()
+    #subscriptions
+    sub = Client.create_subscription(500, handler)
+    #nodes of interest
+    handle = sub.subscribe_data_change((node_tag11,node_tag12))
+
+    #ment for periodic readig of nodes
+    # while True:
+    #     value_tag11 = node_tag11.get_value()
+    #     value_tag12 = node_tag12.get_value()
+    #     print("Value of Tag 11 is: ", value_tag11, "and the value of Tag 12 is: ", value_tag12)
+
+    #     time.sleep(1)
+
+
+
+
+
+
+#koda za dobivanje povprecja in za dobivanje vseh podatkov iz baze
+
+
+
+import sqlite3
+
+# establish a connection to the database
+conn = sqlite3.connect('values.db')
+
+# create a cursor to execute SQL commands
+c = conn.cursor()
+
+# execute SQL command to print all rows for tag11
+c.execute("SELECT * FROM robot WHERE name = 'tag11'")
+print("All values for tag11:")
+for row in c.fetchall():
+    print(row)
+
+# execute SQL command to calculate the average value for tag11
+c.execute("SELECT AVG(value) FROM robot WHERE name = 'tag11'")
+# fetch the result and print the average value
+result = c.fetchone()[0]
+print("Average value for tag11 is:", result)
+
+
+# execute SQL command to print all rows for tag12
+c.execute("SELECT * FROM robot WHERE name = 'tag12'")
+print("All values for tag12:")
+for row in c.fetchall():
+    print(row)
+
+# execute SQL command to calculate the average value for tag12
+c.execute("SELECT AVG(value) FROM robot WHERE name = 'tag12'")
+# fetch the result and print the average value
+result = c.fetchone()[0]
+print("Average value for tag12 is:", result)
+
+
+# close the connection
+conn.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# server.py random coda med testom
+
+# import sqlite3
+# from flask import Flask, render_template, jsonify
+# from flask_cors import CORS
+# from flask_sock import Sock
+# from flask_socketio import SocketIO, emit
+# from time import sleep
+# from datetime import datetime
+
+
+# #creat a flask instance
+# app = Flask(__name__)
+# sock = Sock(app)
+# socketio = SocketIO(app)
+# #constant update
+# app.config.from_object(__name__)
+
+# CORS(app, resources={r"/*":{'origins':"*"}})
+
+# #create a route 
+# @app.route('/')
+
+# def index():
+#     return render_template('index.html')
+
+# create an API endpoint to return the data from values.db
+# @app.route("/api/values")
+# def get_values():
+#     conn = sqlite3.connect("../values.db")
+#     cursor = conn.cursor()
+#     cursor.execute("SELECT * FROM robot")
+#     rows = cursor.fetchall()
+#     conn.close()
+#     values = []
+#     for row in rows:
+#         values.append({"name": row[0], "value": row[1]})
+#     return jsonify(values)
+# def get_average():
+#     conn = sqlite3.connect("../values.db")
+#     cursor = conn.cursor()
+#     cursor.execute("SELECT AVG(value) FROM robot")
+#     average = cursor.fetchone()[0]
+#     conn.close()
+#     return jsonify({"average": average})
+# @socketio.on('connect')
+# def test_connect():
+#     def send_time():
+#         while True:
+#             socketio.emit('current_time', str(datetime.now()))
+#             sleep(5)
+
+#     # Start a new thread to send messages in the background
+#     thread = Thread(target=send_time)
+#     thread.daemon = True
+#     thread.start()
+#     #socketio.emit('after connect', {'data':'Let us learn Web Socket in Flask'})
+
+
+# if __name__ == "__main__":
+#     socketio.run(app)
+#     #app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#vue app zacetni
+
+
+<!-- npm run serve-->
+<template>
+  <div>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <button v-on:click="sendMessage">Send Message</button>
+    <ul>
+      <li v-for="(data, index) in dataList" :key="index">
+        {{ data }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import io from 'socket.io-client';
+
+export default {
+  data() {
+    return {
+      dataList: []
+    };
+  },
+  mounted() {
+    var socket = io('http://localhost:5000');
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
+    socket.on('after connect', (details) => {
+      console.log('Received data from server:', details);
+      this.dataList.push(details); // Add data to the dataList array
+    });
+  },
+  methods: {
+    sendMessage() {
+      // Code to send a message to the server goes here
+    }
+  }
+}
+</script>
+
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
