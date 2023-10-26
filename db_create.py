@@ -12,6 +12,9 @@ c.execute("""CREATE TABLE robot (
             date TEXT
     )""")
 
+#current_logged_user_level TEXT,
+#robot_running INTEGER,
+
 # commit
 conn.commit()
 
