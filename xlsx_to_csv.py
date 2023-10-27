@@ -1,16 +1,20 @@
 import pandas as pd
 
-
 def extract_values(input_file, output_file):
     # Read the Excel file
     df = pd.read_excel(input_file, header=None)
 
-    # Extract the variables (from row 0) and values (from row 3)
-    variables = df.iloc[0].tolist()
-    #values = df.iloc[3].tolist()
+    # Extract the values from rows 1 and 4
+    extracted_data = df.iloc[[13]]
 
-    # Create a new DataFrame with variables in the first column and values in the second column
-    extracted_data = pd.DataFrame({'Variables': variables})#, 'Values': values})
+    # Transpose the DataFrame to have variables as columns
+    extracted_data = extracted_data.transpose()
+
+    # Set column names
+    extracted_data.columns = extracted_data.iloc[0]
+
+    # Drop the first row (contains column names)
+    extracted_data = extracted_data[1:]
 
     # Save as CSV
     extracted_data.to_csv(output_file, index=False)
@@ -19,4 +23,3 @@ def extract_values(input_file, output_file):
 input_file = 'variables_input.xlsx'
 output_file = 'output.csv'
 extract_values(input_file, output_file)
-
