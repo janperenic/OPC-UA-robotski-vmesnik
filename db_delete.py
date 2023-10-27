@@ -8,6 +8,7 @@ c = conn.cursor()
 
 # execute the SQL command to delete all content in the table
 c.execute("DELETE FROM robot")
+c.execute('DROP TABLE IF EXISTS robot')
 
 # commit changes
 conn.commit()

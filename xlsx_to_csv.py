@@ -5,7 +5,7 @@ def extract_values(input_file, output_file):
     df = pd.read_excel(input_file, header=None)
 
     # Extract the values from rows 1 and 4
-    extracted_data = df.iloc[[13]]
+    extracted_data = df.iloc[[0]]
 
     # Transpose the DataFrame to have variables as columns
     extracted_data = extracted_data.transpose()
