@@ -9,8 +9,19 @@ c = conn.cursor()  # cursor
 c.execute("""CREATE TABLE robot (
             date DATE,
             current_logged_user_level TEXT,
-            robot_running BOOLEAN,
-            robot_playback BOOLEAN,
+            robot_running INTEGER
+    )""")
+
+# commit
+conn.commit()
+
+# close the connection
+conn.close()
+
+"""
+
+bollean ni supported iz strani SQL ligh
+robot_playback BOOLEAN,
             robot_energy_saving BOOLEAN,
             product_code INTEGER,
             serial_number INTEGER,
@@ -128,11 +139,4 @@ c.execute("""CREATE TABLE robot (
             overhaul_design_lifetime INTEGER,
             overhaul_remaining_lifetime INTEGER,
             emergency_stop BOOLEAN,
-            protective_stop BOOLEAN
-    )""")
-
-# commit
-conn.commit()
-
-# close the connection
-conn.close()
+            protective_stop BOOLEAN"""
