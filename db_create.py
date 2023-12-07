@@ -9,7 +9,9 @@ c = conn.cursor()  # cursor
 c.execute("""CREATE TABLE robot (
             date DATE,
             current_logged_user_level TEXT,
-            robot_running INTEGER
+            robot_running INTEGER,
+            alarm_code INTEGER
+          
     )""")
 
 # commit

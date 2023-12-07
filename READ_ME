@@ -20,3 +20,7 @@ ali npx nuxt dev
 
 aktivacija venv:
 & c:/Users/janpe/Desktop/Faks/Magisterska/raziskava/yaskawa/Scripts/Activate.ps1
+
+stash(za aktivacijo na githubu za download na drugi napravi):
+git stash push --include-untracked
+git pull
