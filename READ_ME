@@ -11,6 +11,7 @@ namenjen obdelavi podatkov iz baze
 
 back_end:
 #boot up with python server.py
+#boot in back_end folder
 flask --app server.py --debug run #zazeni s tem da di hotreloauda
 
 frond_end:

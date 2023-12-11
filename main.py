@@ -41,6 +41,7 @@ class sub_handler(object):
                 self.robot_running_val = val
             if node == self.nodes[2]:
                 self.alarm_code_val = val
+            print(self.current_logged_user_level_val, self.robot_running_val, self.alarm_code_val)
             self.c.execute("INSERT INTO robot VALUES (?, ?, ?, ?)", (current_time, self.current_logged_user_level_val, self.robot_running_val, self.alarm_code_val))
             self.conn.commit()
 

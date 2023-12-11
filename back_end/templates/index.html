@@ -10,7 +10,7 @@ $(document).ready(function() {
 // sending a connect request to the server.
 var socket = io.connect('http://127.0.0.1:5000');
 socket.on('after connect', function(connectMsg) {
-$('#log').append('<br>' + $('<div/>').text('What is the intention of the code: ' + connectMsg.tag12).html());
+$('#log').append('<br>' + $('<div/>').text('What is the intention of the code: ' + connectMsg.last_alarm_code).html());
 $('#log').append('<br>' + $('<div/>').text('What is the intention of the code: ' + connectMsg.data).html());
 });
 });
