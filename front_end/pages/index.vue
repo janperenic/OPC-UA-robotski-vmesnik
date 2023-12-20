@@ -17,9 +17,13 @@ export default {
   },
   mounted() {
     const socket = io('http://127.0.0.1:5000');
+    setInterval(function() {
+    socket.emit('time');
+    }, 1) 
     socket.on('after connect', (details) => {
       this.last_alarm_code = details.last_alarm_code;
       this.data = details.data;
+      console.log(details.last_alarm_code);
     });
   }
 };
