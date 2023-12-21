@@ -41,7 +41,6 @@ def emit_data():
     # emit data to clients
     socketio.emit('after connect', details)
 
-    # check for changes in the alarm_code, robot_running, and logged_user_level columns
     c.execute("SELECT alarm_code, robot_running, current_logged_user_level FROM robot ORDER BY date DESC LIMIT 1")
     latest_alarm_code, latest_robot_running, latest_current_logged_user_level = c.fetchone()
 

@@ -13,6 +13,8 @@
     "strict": true,
     "noImplicitThis": true,
     "esModuleInterop": true,
+    "types": [],
+    "verbatimModuleSyntax": true,
     "allowJs": true,
     "noEmit": true,
     "resolveJsonModule": true,
@@ -45,8 +47,14 @@
       "assets": [
         "../assets"
       ],
+      "assets/*": [
+        "../assets/*"
+      ],
       "public": [
         "../public"
+      ],
+      "public/*": [
+        "../public/*"
       ],
       "#app": [
         "../node_modules/nuxt/dist/app"
@@ -58,7 +66,7 @@
         "../node_modules/nuxt/dist/app/compat/vue-demi"
       ],
       "#vue-router": [
-        "./vue-router"
+        "./vue-router-stub"
       ],
       "#imports": [
         "./imports"
@@ -77,6 +85,7 @@
   "include": [
     "./nuxt.d.ts",
     "../**/*",
+    "../node_modules/@nuxt/devtools/runtime",
     "../node_modules/@nuxt/telemetry/runtime",
     ".."
   ],
@@ -84,6 +93,7 @@
     "../node_modules",
     "../../node_modules",
     "../node_modules/nuxt/node_modules",
+    "../node_modules/@nuxt/devtools/runtime/server",
     "../node_modules/@nuxt/telemetry/runtime/server",
     "../dist",
     "../.output"

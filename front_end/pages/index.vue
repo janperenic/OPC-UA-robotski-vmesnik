@@ -1,30 +1,20 @@
 <template>
-  <div>
-    <p>Alarm code value: {{ last_alarm_code }}</p>
-    <p>Data: {{ data }}</p>
-  </div>
+    <div>
+      <h1>Welcome to the homepage</h1>
+      <AppAlert>
+        This is an auto-imported component
+      </AppAlert>
+    </div>
 </template>
 
 <script>
-import { io } from 'socket.io-client';
+// Use a static import for server-side compatibility
+import '~/assets/css/first.css'
 
-export default {
-  data() {
-    return {
-      last_alarm_code: null,
-      data: null
-    };
-  },
-  mounted() {
-    const socket = io('http://127.0.0.1:5000');
-    setInterval(function() {
-    socket.emit('time');
-    }, 1) 
-    socket.on('after connect', (details) => {
-      this.last_alarm_code = details.last_alarm_code;
-      this.data = details.data;
-      console.log(details.last_alarm_code);
-    });
-  }
-};
+// Caution: Dynamic imports are not server-side compatible
+import('~/assets/css/first.css')
 </script>
+
+<style>
+@import url("~/assets/css/second.css");
+</style>
